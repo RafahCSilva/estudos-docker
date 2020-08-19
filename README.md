@@ -7,7 +7,7 @@ Meus estudos sobre DevOps com Docker, Kubernetes e Clouds
 ### Containers Docker
 
 - Docker [link](https://www.schoolofnet.com/plano-de-estudo-docker/)
-    - [ ] 01 - Iniciando com Docker [link](https://www.schoolofnet.com/curso/containers/docker-fundamentos/iniciando-com-docker-rev2/)
+    - [x] 01 - Iniciando com Docker [link](https://www.schoolofnet.com/curso/containers/docker-fundamentos/iniciando-com-docker-rev2/)
     - [ ] 02 - Avançando com Docker [link](https://www.schoolofnet.com/curso/containers/docker-fundamentos/avancando-com-docker-rev2/)
     - [ ] 03 - Avançando com DockerFile e Docker-Compose [link](https://www.schoolofnet.com/curso/containers/docker-fundamentos/avancando-com-dockerfile-e-docker-compose/)
     - [ ] 04 - Docker - Volumes e Networking [link](https://www.schoolofnet.com/curso/containers/docker-fundamentos/docker-volumes-networking-rev2/)
