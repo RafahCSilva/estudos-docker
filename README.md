@@ -56,3 +56,22 @@ Meus estudos sobre DevOps com Docker, Kubernetes e Clouds
     - [ ] 04 - Avançando com Zabbix [link](https://www.schoolofnet.com/curso/monitoramento/zabbix/avancando-com-zabbix-rev-2/)
     - [ ] 05 - Gerenciamento de Logs com Papertail [link](https://www.schoolofnet.com/curso/monitoramento/logging/gerenciamento-de-logs-com-papertail/)
     - [ ] 06 - Graylog [link](https://www.schoolofnet.com/curso/monitoramento/logging/graylog/)
+
+
+
+## YouTube
+
+### Docker
+
+- **LINUXtips** [link](https://www.youtube.com/channel/UCJnKVGmXRXrH49Tvrx5X0Sw)
+    - [ ] Curso Descomplicando o Docker - 2016 [link](https://www.youtube.com/playlist?list=PLf-O3X2-mxDkiUH0r_BadgtELJ_qyrFJ_)
+
+
+### Kubernetes
+
+- **School of Net** [link](https://www.youtube.com/channel/UCIlafifr-E57jct9knCrZzw)
+    - [x] Você sabe o que é o Kubernetes? [link](https://www.youtube.com/watch?v=a-2OBHlM5gU)
+    - [ ] Trabalhando com Docker e Kubernetes local com Minikube [link](https://www.youtube.com/watch?v=VOQatejDYFo)
+- **LINUXtips** [link](https://www.youtube.com/channel/UCJnKVGmXRXrH49Tvrx5X0Sw)
+    - [x] Descomplicando o Kubernetes [link](https://www.youtube.com/playlist?list=PLf-O3X2-mxDmXQU-mJVgeaSL7Rtejvv0S)
+

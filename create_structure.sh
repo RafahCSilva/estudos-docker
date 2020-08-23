@@ -52,3 +52,8 @@ mkdir -p \
   SoN-4-Monitoramento/04-avancando-com-zabbix \
   SoN-4-Monitoramento/05-gerenciamento-de-logs-com-papertail \
   SoN-4-Monitoramento/06-graylog
+
+
+mkdir -p \
+  YT-LINUXtips-kubernetes \
+  YT-LINUXtips-kubernetes/01-descomplicando-o-kubernetes
