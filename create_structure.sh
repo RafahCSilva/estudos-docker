@@ -7,10 +7,10 @@ mkdir -p \
   SoN-1-Docker/03_avancando-com-docker-file-e-docker-compose \
   SoN-1-Docker/04_docker-volumes-e-networking \
   SoN-1-Docker/05_docker-na-pratica \
-  SoN-1-Docker/06_docker-na-digital-ocean \
-  SoN-1-Docker/07_docker-na-aws \
-  SoN-1-Docker/08_docker-no-azure \
-  SoN-1-Docker/09_docker-em-producao \
+  SoN-1-Docker/06_docker-em-producao \
+  SoN-1-Docker/07_docker-na-digital-ocean \
+  SoN-1-Docker/08_docker-na-aws \
+  SoN-1-Docker/09_docker-no-azure \
   SoN-1-Docker/10_traefik-proxy-reverso-para-containers
 
 

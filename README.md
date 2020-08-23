@@ -10,12 +10,12 @@ Meus estudos sobre DevOps com Docker, Kubernetes e Clouds
     - [x] 01 - Iniciando com Docker [link](https://www.schoolofnet.com/curso/containers/docker-fundamentos/iniciando-com-docker-rev2/)
     - [x] 02 - Avançando com Docker [link](https://www.schoolofnet.com/curso/containers/docker-fundamentos/avancando-com-docker-rev2/)
     - [x] 03 - Avançando com DockerFile e Docker-Compose [link](https://www.schoolofnet.com/curso/containers/docker-fundamentos/avancando-com-dockerfile-e-docker-compose/)
-    - [ ] 04 - Docker - Volumes e Networking [link](https://www.schoolofnet.com/curso/containers/docker-fundamentos/docker-volumes-networking-rev2/)
-    - [ ] 05 - Docker na prática [link](https://www.schoolofnet.com/curso/containers/docker-em-producao/docker-na-pratica/)
-    - [ ] 06 - Docker na Digital Ocean [link](https://www.schoolofnet.com/curso/containers/docker-em-producao/docker-na-digital-ocean/)
-    - [ ] 07 - Docker na AWS [link](https://www.schoolofnet.com/curso/containers/docker-em-producao/docker-na-aws-rev2/)
-    - [ ] 08 - Docker no Azure [link](https://www.schoolofnet.com/curso/containers/docker-em-producao/docker-no-azure/)
-    - [ ] 09 - Docker em Produção [link](https://www.schoolofnet.com/projeto-pratico/containers/docker-em-producao/docker-em-producao/)
+    - [x] 04 - Docker - Volumes e Networking [link](https://www.schoolofnet.com/curso/containers/docker-fundamentos/docker-volumes-networking-rev2/)
+    - [ ] 05 - ~~Docker na Prática~~ [link](https://www.schoolofnet.com/curso/containers/docker-em-producao/docker-na-pratica/)
+    - [ ] 06 - ~~Docker em Produção~~ [link](https://www.schoolofnet.com/projeto-pratico/containers/docker-em-producao/docker-em-producao/)
+    - [ ] 07 - ~~Docker na Digital Ocean~~ [link](https://www.schoolofnet.com/curso/containers/docker-em-producao/docker-na-digital-ocean/)
+    - [ ] 08 - ~~Docker na AWS~~ [link](https://www.schoolofnet.com/curso/containers/docker-em-producao/docker-na-aws-rev2/)
+    - [ ] 09 - ~~Docker no Azure~~ [link](https://www.schoolofnet.com/curso/containers/docker-em-producao/docker-no-azure/)
     - [ ] 10 - Traefik - Proxy reverso para containers [link](https://www.schoolofnet.com/curso/containers/docker-em-producao/traefik-proxy-reverso-para-containers-rev2/)
 
 
