@@ -1,0 +1,98 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  labels:
+    app: nginx-deployment
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: http
+  selector:
+    app: nginx-deployment
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-deployment
+  template:
+    metadata:
+      labels:
+        app: nginx-deployment
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.14.2
+          command: ["nginx", "-g", "daemon off;"]
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /etc/nginx/conf.d
+              name: configmap-volume
+            - mountPath: /var/www/html/public
+              name: indexmap-volume
+      volumes:
+        - name: configmap-volume
+          configMap:
+            name: nginxconf-map
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+        - name: indexmap-volume
+          configMap:
+            name: nginxindex-map
+            items:
+              - key: index.php
+                path: index.php
+
+---
+
+# @ref https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginxindex-map
+data:
+  index.php: |-
+    <?php echo "sou fake";
+
+---
+
+# kubectl create configmap nginxconfigmap --from-file=../library_api/docker/nginx/default
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginxconf-map
+data:
+  nginx.conf: |-
+    server {
+        listen 80;
+        index index.php index.html;
+        #root /usr/share/nginx/html;
+        root /var/www/html/public;
+        location ~ \.php$ {
+            try_files $uri =404;
+            fastcgi_split_path_info ^(.+\.php)(/.+)$;
+            fastcgi_pass testando01app-service:9000;
+            fastcgi_index index.php;
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param PATH_INFO $fastcgi_path_info;
+        }
+        location / {
+            try_files $uri $uri/ /index.php?$query_string;
+            gzip_static on;
+        }
+    }
