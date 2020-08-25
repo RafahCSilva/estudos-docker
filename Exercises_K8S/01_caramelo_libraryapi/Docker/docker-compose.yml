@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  app:
+    build:
+      context: ../
+      dockerfile: ./Docker/app.Dockerfile
+    image: rafahcsilva/k8s_libraryapi-app:1.1.0
+    command: ["php-fpm"]
+    environment:
+      APP_ENV: local
+      DB_PORT: 3306
+      DB_USERNAME: sandbox
+      DB_DATABASE: library_admin
+      DB_PASSWORD: sandbox
+      DB_HOST: mysql
+      MYSQL_HOST: mysql
+      REDIS_HOST: redis
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      DEBUG: 1

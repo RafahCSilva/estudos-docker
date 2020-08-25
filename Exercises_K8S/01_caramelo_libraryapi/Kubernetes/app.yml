@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: testando01app-service
+  name: app-service
   labels:
-    app: testando01app-deployment
+    app: app-deployment
 spec:
   type: NodePort
   ports:
@@ -11,32 +11,30 @@ spec:
       protocol: TCP
       nodePort: 30080
   selector:
-    app: testando01app-deployment
+    app: app-deployment
 
 ---
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: testando01app-deployment
+  name: app-deployment
   labels:
-    app: testando01app-deployment
+    app: app-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: testando01app-deployment
+      app: app-deployment
   template:
     metadata:
       labels:
-        app: testando01app-deployment
+        app: app-deployment
     spec:
       containers:
-        - name: testando01app-deployment
-          image: rafahcsilva/testando01-app:v2
-          # command: [ "sh", "crontab-install.sh", "&&", "php-fpm", "&&", "php-fpm", "-v" ]
+        - name: app-deployment
+          image: rafahcsilva/k8s_libraryapi-app:1.1.0
           command: [ "php-fpm" ]
-          # command: ["/bin/sh", "-c", "mkdir /usr/share/nginx ; ln -s /var/www/html/public /usr/share/nginx/html;  php-fpm;"]
           ports:
             - containerPort: 80
           envFrom:

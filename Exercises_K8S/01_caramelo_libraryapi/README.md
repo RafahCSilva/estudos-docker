@@ -5,51 +5,36 @@
 
 - Aplicação desenvolvida por [brunocaramelo/library_api](https://github.com/brunocaramelo/library_api)
 
-
 ````shell script
-git clone  --branch features/kubernets-integration https://github.com/brunocaramelo/library_api.git
-cd library_api
-
-# edit /library_api/docker-compose.yml, in php service
-#    from => image: laravel:php-fpm
-#    to   => image: rafahcsilva/testando01-app:v2
-sed -i '' 's/laravel:php-fpm/rafahcsilva\/testando01-app:v2/' docker-compose.yml
+# Clone te Application for Example
+git clone  --branch features/kubernets-integration https://github.com/brunocaramelo/library_api.git library_api
 ````
 
 
 ## DOCKER - Building Images
 
 ````shell script
+cd Docker
 # Build all services
-docker-compose build
+docker-compose build app
+
+# check container is OK
+docker-compose up -d
+docker-compose exec app bash
+docker-compose down
+
 
 # Login Docker Hub
 docker login
 
 # Suba a Imagem para docker.io/rafahcsilva/testando01-app
-docker-compose push php
-#  Pushing php (rafahcsilva/testando01-app:v1)...
-#  The push refers to repository [docker.io/rafahcsilva/testando01-app]
-#  2b09d1069803: Pushed
-#  5c217b44c19f: Pushed
-#  df49a05a597e: Pushed
-#  3cafc807cf23: Pushed
-#  30918c8cdb61: Pushed
-#  8bd7d0089c63: Pushed
-#  965dd27573b5: Mounted from library/php
-#  9c8e7c68045e: Mounted from library/php
-#  3a49ca505d36: Mounted from library/php
-#  2d59274138dc: Mounted from library/php
-#  9628bb7e13e0: Mounted from library/php
-#  c0ff421a6f25: Mounted from library/php
-#  2ecbf8178259: Mounted from library/php
-#  65bff11b305b: Mounted from library/php
-#  de5ed450c2e9: Mounted from library/php
-#  8bf7a47284aa: Mounted from library/php
-#  d0f104dc0a1f: Mounted from library/php
-#  v1: digest: sha256:f1cc2473c58fff00a460851c1721e0246c210beff3fc8aad7f37b6bceb40e79f size: 3882
+docker-compose push app
+#  Pushing app (rafahcsilva/k8s_libraryapi-app:1.0.0)...
+#  The push refers to repository [docker.io/rafahcsilva/k8s_libraryapi-app]
+#  ...
+#  1.0.0: digest: sha256:2617e7c32a425ff2a83ddfc6bb85ea45bca929a7d69e9b691d7a0a04be51326b size: 3883
 
-# Publicado em https://hub.docker.com/r/rafahcsilva/testando01-app
+# Publicado em https://hub.docker.com/r/rafahcsilva/k8s_libraryapi-app
 ````
 
 
@@ -57,13 +42,30 @@ docker-compose push php
 
 ````shell script
 # Crie os YMLs
-cd ../kubernetes
+cd ../Kubernetes
 
 # Aplique eles
 kubectl apply -f mysql.yml
 kubectl apply -f redis.yml
 kubectl apply -f app.yml
 kubectl apply -f nginx.yml
+#  service/mysql-service created
+#  deployment.apps/mysql-deployment created
+#  persistentvolume/mysql-pv-volume created
+#  persistentvolumeclaim/mysql-pv-claim created
+#
+#  service/redis-service created
+#  deployment.apps/redis-deployment created
+#
+#  service/app-service created
+#  deployment.apps/app-deployment created
+#  configmap/app-conf created
+#
+#  service/nginx-service created
+#  deployment.apps/nginx-deployment created
+#  configmap/nginxindex-map created
+#  configmap/nginxconf-map created
+
 
 # veja se os services estao ok
 kubectl get services
@@ -76,8 +78,6 @@ kubectl get services
 
 
 # Login in App POD
-apt-get install unzip
-composer install
 php artisan migrate --seed
 
 

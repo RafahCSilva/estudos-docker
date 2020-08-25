@@ -1,5 +1,8 @@
 # Descomplicando o Kubernetes
 
+Curso da playlist [Descomplicando o Kubernetes](https://www.youtube.com/playlist?list=PLf-O3X2-mxDmXQU-mJVgeaSL7Rtejvv0S)
+by [LINUXtips](https://www.youtube.com/channel/UCJnKVGmXRXrH49Tvrx5X0Sw)
+
 ## 1. O que é o Kubernetes e como instalar o Minikube
 
 - [linuxtips.io/post/descomplicando-o-kubernetes-01](https://www.linuxtips.io/post/descomplicando-o-kubernetes-01)
