@@ -11,7 +11,7 @@ git clone  --branch features/kubernets-integration https://github.com/brunocaram
 ````
 
 
-## DOCKER - Building Images
+## DOCKER
 
 ````shell script
 cd Docker
@@ -38,7 +38,7 @@ docker-compose push app
 ````
 
 
-### KUBENETES 
+## KUBENETES 
 
 ````shell script
 # Crie os YMLs
@@ -100,4 +100,33 @@ kubectl apply -f webapp.yml
 
 # Get URL
 minikube service webapp-service --url
+`````
+
+
+### INGRESS ON MINIKUBE
+
+`````shell script
+# Set up Ingress on Minikube with the NGINX Ingress Controller
+# @ref https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/
+
+# Enable the Ingress controller
+#  1. To enable the NGINX Ingress controller, run the following command:
+minikube addons enable ingress
+
+#  2. Verify that the NGINX Ingress controller is running (Note: This can take up to a minute.)
+kubectl get pods -n kube-system
+
+kubectl apply -f webapp-ingress.yml
+# ingress.networking.k8s.io/webapp-ingress created
+
+# List Ingress
+kubectl get ingress
+#  NAME             CLASS    HOSTS             ADDRESS        PORTS   AGE
+#  webapp-ingress   <none>   libraryapi.test   192.168.64.2   80      47s
+
+# Ad domain in /etc/hosts
+sudo nano /etc/hosts
+#  192.168.64.2 libraryapi.test
+
+# acesse http://libraryapi.test/api/v1/books
 `````
