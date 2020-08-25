@@ -88,3 +88,16 @@ minikube service nginx-service --url
 # Acesse o app
 # http://192.168.64.2:31734/api/v1/authors
 ````
+
+`````shell script
+# App e Nginx no mesmo POD
+kubectl apply -f webapp.yml
+#  service/webapp-service created
+#  deployment.apps/webapp-deployment created
+#  configmap/webapp-app-conf created
+#  configmap/webapp-nginxindex-map created
+#  configmap/webapp-nginxconf-map created
+
+# Get URL
+minikube service webapp-service --url
+`````
