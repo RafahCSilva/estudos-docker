@@ -38,8 +38,7 @@ spec:
     spec:
       containers:
         - name: webapp-php-container
-          image: rafahcsilva/k8s_libraryapi-app:1.1.0
-          command: [ "php-fpm" ]
+          image: rafahcsilva/k8s_libraryapi-app:1.2.0
           ports:
             - containerPort: 80
           envFrom:

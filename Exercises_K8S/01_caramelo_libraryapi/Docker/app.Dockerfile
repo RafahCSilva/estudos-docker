@@ -51,9 +51,15 @@ RUN composer install --no-progress --no-scripts --no-interaction \
 # Change uid and gid of apache to docker user uid/gid
 RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
 
-# Default command is phpunit
-CMD ["phpunit"]
-#CMD ["php-fpm"]
+# Entrypoint Scripts
+# Wait For It
+ADD --chown=www-data:www-data \
+  https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh \
+  /entrypoint/wait-for-it.sh
+RUN chmod +x /entrypoint/wait-for-it.sh
+# App Entrypoint
+COPY --chown=www-data:www-data ./Docker/entrypoint__app_entrypoint.sh /entrypoint/app_entrypoint.sh
+RUN chmod +x /entrypoint/app_entrypoint.sh
 
 EXPOSE 9000
-
+ENTRYPOINT ["sh", "/entrypoint/app_entrypoint.sh"]

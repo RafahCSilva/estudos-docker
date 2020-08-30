@@ -5,8 +5,7 @@ services:
     build:
       context: ../
       dockerfile: ./Docker/app.Dockerfile
-    image: rafahcsilva/k8s_libraryapi-app:1.1.0
-    command: ["php-fpm"]
+    image: rafahcsilva/k8s_libraryapi-app:1.2.0
     environment:
       APP_ENV: local
       DB_PORT: 3306
