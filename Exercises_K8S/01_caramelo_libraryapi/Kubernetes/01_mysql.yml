@@ -3,6 +3,7 @@
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: library-api
   name: mysql-service
 spec:
   ports:
@@ -16,6 +17,7 @@ spec:
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
+  namespace: library-api
   name: mysql-deployment
   labels:
     app: mysql-deployment
@@ -58,6 +60,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
+  namespace: library-api
   name: mysql-pv-volume
   labels:
     type: local
@@ -75,6 +78,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  namespace: library-api
   name: mysql-pv-claim
 spec:
   storageClassName: manual

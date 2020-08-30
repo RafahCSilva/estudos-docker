@@ -3,6 +3,7 @@
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: library-api
   name: nginx-service
   labels:
     app: nginx-deployment
@@ -21,6 +22,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: library-api
   name: nginx-deployment
   labels:
     app: nginx-deployment
@@ -65,6 +67,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  namespace: library-api
   name: nginxindex-map
 data:
   index.php: |-
@@ -76,6 +79,7 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  namespace: library-api
   name: nginxconf-map
 data:
   nginx.conf: |-

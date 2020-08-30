@@ -45,10 +45,11 @@ docker-compose push app
 cd ../Kubernetes
 
 # Aplique eles
-kubectl apply -f mysql.yml
-kubectl apply -f redis.yml
-kubectl apply -f app.yml
-kubectl apply -f nginx.yml
+kubectl apply -f 00_namespace.yml
+kubectl apply -f 01_mysql.yml
+kubectl apply -f 02_redis.yml
+kubectl apply -f 03_app.yml
+kubectl apply -f 04_nginx.yml
 #  service/mysql-service created
 #  deployment.apps/mysql-deployment created
 #  persistentvolume/mysql-pv-volume created
@@ -68,7 +69,7 @@ kubectl apply -f nginx.yml
 
 
 # veja se os services estao ok
-kubectl get services
+kubectl get services -n=library-api
 #  NAME                    TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
 #  kubernetes              ClusterIP      10.96.0.1       <none>        443/TCP        6h13m
 #  mysql-service           ClusterIP      None            <none>        3306/TCP       17m
@@ -77,7 +78,12 @@ kubectl get services
 #  testando01app-service   ClusterIP      10.97.186.47    <none>        9000/TCP       27m
 
 
-# Login in App POD
+# Rodando o Migrate:
+# list all pods
+kgowide pods -n=library-ap
+# copia o nome completo do app-deployment-*, e execute o comando abaixo
+kubectl exec app-deployment-* -n=library-api -- php artisan migrate --seed
+# ou Login no App-POD e execute
 php artisan migrate --seed
 
 
@@ -91,7 +97,7 @@ minikube service nginx-service --url
 
 `````shell script
 # App e Nginx no mesmo POD
-kubectl apply -f webapp.yml
+kubectl apply -f 05_webapp.yml
 #  service/webapp-service created
 #  deployment.apps/webapp-deployment created
 #  configmap/webapp-app-conf created
@@ -116,11 +122,11 @@ minikube addons enable ingress
 #  2. Verify that the NGINX Ingress controller is running (Note: This can take up to a minute.)
 kubectl get pods -n kube-system
 
-kubectl apply -f webapp-ingress.yml
+kubectl apply -f 06_webapp-ingress.yml
 # ingress.networking.k8s.io/webapp-ingress created
 
 # List Ingress
-kubectl get ingress
+kubectl get ingress -n=library-api
 #  NAME             CLASS    HOSTS             ADDRESS        PORTS   AGE
 #  webapp-ingress   <none>   libraryapi.test   192.168.64.2   80      47s
 

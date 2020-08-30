@@ -3,6 +3,7 @@
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: library-api
   name: webapp-service
   labels:
     app: webapp-deployment
@@ -21,6 +22,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: library-api
   name: webapp-deployment
   labels:
     app: webapp-deployment
@@ -72,6 +74,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  namespace: library-api
   name: webapp-app-conf
   labels:
     name: webapp-app-conf
@@ -118,6 +121,7 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  namespace: library-api
   name: webapp-nginxindex-map
 data:
   index.php: |-
@@ -129,6 +133,7 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  namespace: library-api
   name: webapp-nginxconf-map
 data:
   nginx.conf: |-
