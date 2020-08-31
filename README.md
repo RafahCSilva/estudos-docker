@@ -33,7 +33,7 @@ Meus estudos sobre DevOps com Docker, Kubernetes e Clouds
      - [ ] 09 - Empacotando aplicações Kubernetes com Helm [link](https://www.schoolofnet.com/curso/containers/kubernetes/empacotando-aplicacoes-kubernetes-com-helm/)
      - [ ] 10 - Google Kubernetes Engine [link](https://www.schoolofnet.com/curso/containers/kubernetes/google-kubernetes-engine/)
      - [ ] 11 - Kubernetes na Digital Ocean [link](https://www.schoolofnet.com/curso/containers/kubernetes/kubernetes-na-digital-ocean/)
-     - [ ] 12 - Azure Kubernetes Service - Kubernetes no Azure [link](https://www.schoolofnet.com/curso/containers/kubernetes/azure-kubernetes-service-kubernetes-no-azure/)
+     - [x] 12 - Azure Kubernetes Service - Kubernetes no Azure [link](https://www.schoolofnet.com/curso/containers/kubernetes/azure-kubernetes-service-kubernetes-no-azure/)
      - [ ] 13 - Elastic Kubernetes Service - Kubernetes na AWS [link](https://www.schoolofnet.com/curso/containers/kubernetes/elastic-kubernetes-service-kubernetes-na-aws/)
      - [ ] 14 - Rancher 2.0 [link](https://www.schoolofnet.com/curso/containers/kubernetes/rancher-20-revisao-2/)
      - [ ] 15 - Avançando com Rancher [link](https://www.schoolofnet.com/curso/containers/kubernetes/avancando-com-rancher-rev2/)
