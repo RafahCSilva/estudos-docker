@@ -25,7 +25,7 @@ Meus estudos sobre DevOps com Docker, Kubernetes e Clouds
      - [x] 01 - Iniciando com Kubernetes [link](https://www.schoolofnet.com/curso/containers/kubernetes/iniciando-com-kubernetes-rev-2/)
      - [x] 02 - Avançando com Kubernetes [link](https://www.schoolofnet.com/curso/containers/kubernetes/avancando-com-kubernetes/)
      - [x] 03 - Kubernetes - Deployments, Rolling Update e Horizontal Scaling Pods [link](https://www.schoolofnet.com/curso/containers/kubernetes/kubernetes-deployments-rolling-update-e-horizontal/)
-     - [ ] 04 - Kubernetes - ConfigMaps e Secrets [link](https://www.schoolofnet.com/curso/containers/kubernetes/kubernetes-configmaps-e-secrets/)
+     - [x] 04 - Kubernetes - ConfigMaps e Secrets [link](https://www.schoolofnet.com/curso/containers/kubernetes/kubernetes-configmaps-e-secrets/)
      - [ ] 05 - Kubernetes - Avançando com Serviços [link](https://www.schoolofnet.com/curso/containers/kubernetes/kubernetes-avancando-com-servicos/)
      - [ ] 06 - Trabalhando com o Ingress do Nginx e Cert-Manager no Kubernetes [link](https://www.schoolofnet.com/curso/containers/kubernetes/trabalhando-com-o-ingress-do-nginx-e-cert-manager-/)
      - [ ] 07 - Migrando aplicações statefull para o Kubernetes [link](https://www.schoolofnet.com/curso/containers/kubernetes/migrando-aplicacoes-statefull-para-o-kubernetes/)
