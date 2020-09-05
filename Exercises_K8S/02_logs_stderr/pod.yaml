@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: testando-pod
+spec:
+  containers:
+    - name: testando
+      image: php:7.4-cli
+      command: [ "php", "/app/teste.php" ]
+      volumeMounts:
+        - mountPath: /app
+          name: testando-vol
+  volumes:
+    - name: testando-vol
+      configMap:
+        name: testando-map
+        items:
+          - key: teste.php
+            path: teste.php
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: testando-map
+data:
+  teste.php: |-
+    <?php
+    // config
+    ini_set('log_errors', 'On');
+    ini_set('error_log', '/dev/stderr');
+    error_reporting(E_ALL);
+    // testando daemon
+    for ($i = 0; $i < 10; $i++) {
+        echo "Tick ".date('H:i:s').PHP_EOL;
+        sleep(2);
+        error_log("Tok ".date('H:i:s'));
+    }
+    // throws
+    throw new \Exception('e acabou...');

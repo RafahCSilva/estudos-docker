@@ -1,0 +1,7 @@
+version: '2'
+services:
+  testando:
+    image: php:7.4-cli
+    command: [ "php", "/app/teste.php" ]
+    volumes:
+      - ./teste.php:/app/teste.php
