@@ -1,0 +1,10 @@
+library_api/application/.git
+library_api/application/.env
+library_api/application/node_modules
+library_api/application/vendor
+library_api/application/bootstrap/cache/services.php
+library_api/application/storage/app/*
+library_api/application/storage/framework/cache/**
+library_api/application/storage/framework/sessions/**
+library_api/application/storage/framework/views/**
+library_api/application/storage/logs/*

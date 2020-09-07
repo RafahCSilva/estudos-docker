@@ -29,10 +29,11 @@ docker login
 
 # Suba a Imagem para docker.io/rafahcsilva/testando01-app
 docker-compose push app
-#  Pushing app (rafahcsilva/k8s_libraryapi-app:1.2.0)...
+#  Pushing app (rafahcsilva/k8s_libraryapi-app:1.3.0)...
 #  The push refers to repository [docker.io/rafahcsilva/k8s_libraryapi-app]
 #  ...
-#  1.2.0: digest: sha256:2de45b5886bda10d4ececdbbe77d3fe3baf43807294b74e501aa0b149702834c size: 4713
+#  1.3.0: digest: sha256:81c531b3bba398b3560b97cf267393d560e8c67377e7e050c590029500d953cb size: 4922
+
 
 # Publicado em https://hub.docker.com/r/rafahcsilva/k8s_libraryapi-app
 ````

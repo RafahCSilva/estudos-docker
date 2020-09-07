@@ -5,8 +5,12 @@ services:
     build:
       context: ../
       dockerfile: ./Docker/app.Dockerfile
-    image: rafahcsilva/k8s_libraryapi-app:1.2.0
+    image: rafahcsilva/k8s_libraryapi-app:1.3.0
+    # commands testes
+    #command: [ "php", "artisan", "schedulerInutil:run" ]
+    #command: [ "php", "artisan", "cuspirlog:run", "--parametrozao=valorAqui" ]
     environment:
+      APP_KEY: base64:a89Bj62VIrzfDCsb3m8BNU+JedVKtEZEmqif25fR2g0=
       APP_ENV: local
       DB_PORT: 3306
       DB_USERNAME: sandbox
@@ -18,3 +22,4 @@ services:
       CACHE_DRIVER: redis
       SESSION_DRIVER: redis
       DEBUG: 1
+      LOG_CHANNEL: stderr

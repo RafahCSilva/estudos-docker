@@ -39,3 +39,4 @@ alias kd='kubectl describe'
 
 # minikube
 alias mk="minikube"
+alias mksd="minikube start --driver=hyperkit && minikube dashboard"

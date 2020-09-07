@@ -88,3 +88,6 @@ alias dcd="docker-compose down"
 function dcr() {
   docker-compose run "$@"
 }
+function dcb() {
+  docker-compose build "$@"
+}
