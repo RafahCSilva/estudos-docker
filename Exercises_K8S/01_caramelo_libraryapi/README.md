@@ -32,8 +32,7 @@ docker-compose push app
 #  Pushing app (rafahcsilva/k8s_libraryapi-app:1.3.0)...
 #  The push refers to repository [docker.io/rafahcsilva/k8s_libraryapi-app]
 #  ...
-#  1.3.0: digest: sha256:81c531b3bba398b3560b97cf267393d560e8c67377e7e050c590029500d953cb size: 4922
-
+#  1.3.0: digest: sha256:a1803d21c4ef2998ea46c16f054d6214d6b81446cd87501d60af4eafcf9a8325 size: 4922
 
 # Publicado em https://hub.docker.com/r/rafahcsilva/k8s_libraryapi-app
 ````

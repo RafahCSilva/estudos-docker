@@ -1,0 +1,3 @@
+[submodule "Exercises_K8S/01_caramelo_libraryapi/library_api"]
+	path = Exercises_K8S/01_caramelo_libraryapi/library_api
+	url = https://github.com/brunocaramelo/library_api.git
