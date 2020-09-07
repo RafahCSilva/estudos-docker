@@ -96,7 +96,7 @@ minikube service nginx-service --url
 # http://192.168.64.2:31734/api/v1/authors
 ````
 
-`````shell script
+````shell script
 # App e Nginx no mesmo POD
 kubectl apply -f 05_webapp.yml
 #  service/webapp-service created
@@ -107,12 +107,17 @@ kubectl apply -f 05_webapp.yml
 
 # Get URL
 minikube service webapp-service --url
-`````
+````
+
+````shell script
+# Cron Jobs
+kubectl apply -f 07_cronjobs.yaml
+````
 
 
 ### INGRESS ON MINIKUBE
 
-`````shell script
+````shell script
 # Set up Ingress on Minikube with the NGINX Ingress Controller
 # @ref https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/
 
@@ -136,4 +141,4 @@ sudo nano /etc/hosts
 #  192.168.64.2 libraryapi.test
 
 # acesse http://libraryapi.test/api/v1/books
-`````
+````

@@ -1,0 +1,45 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  namespace: library-api
+  name: schedulerinutil-cronjob
+spec:
+  schedule: "* * * * *"
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - image: rafahcsilva/k8s_libraryapi-app:1.3.0
+              name: job-inutil
+              command: [ "php", "artisan", "schedulerInutil:run" ]
+              envFrom:
+                - configMapRef:
+                    name: webapp-app-conf
+          restartPolicy: Never
+
+---
+
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  namespace: library-api
+  name: cuspirlog-cronjob
+spec:
+  schedule: "* * * * *"
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - image: rafahcsilva/k8s_libraryapi-app:1.3.0
+              name: job-cuspidor-log
+              command: [ "php", "artisan", "cuspirlog:run", "--parametrozao=valorAqui" ]
+              envFrom:
+                - configMapRef:
+                    name: webapp-app-conf
+          restartPolicy: Never
