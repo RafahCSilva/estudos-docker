@@ -61,7 +61,7 @@ function dip() {
   done
   echo "$OUT" | column -t
 }
-function dlog() {
+function dlogs() {
   docker logs -f "$@"
 }
 alias dps="docker ps"
@@ -74,8 +74,10 @@ function dsr_all() {
   drm_all
 }
 function drmi_all() {
-  imgs=$(docker images -q -f dangling=true)
-  [ ! -z "$imgs" ] && docker rmi "$imgs" || echo "no dangling images."
+  docker rmi $(docker images -q)
+}
+function drmi_dangling() {
+  docker rmi $(docker images -q -f dangling=true)
 }
 alias dprune="docker system prune --all"
 

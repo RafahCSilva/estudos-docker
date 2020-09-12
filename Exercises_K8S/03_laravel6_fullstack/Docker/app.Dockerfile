@@ -23,15 +23,22 @@ RUN apt-get update -y -qq  \
         intl \
         pcntl \
         pdo_mysql \
-        pdo_pgsql \
         pdo_sqlite \
-        pgsql \
         zip \
         opcache \
         && \
+    pecl install -o -f redis \
+        && \
+    docker-php-ext-enable \
+        redis \
+        && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    rm /var/log/lastlog /var/log/faillog
+    rm -rf \
+        /var/lib/apt/lists/* \
+        /tmp/* \
+        /var/tmp/* \
+        /var/log/lastlog \
+        /var/log/faillog
 
 RUN php -m
 

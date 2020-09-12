@@ -12,6 +12,8 @@
 */
 
 Route::get('/', function () {
+    Illuminate\Support\Facades\Log::info('LOOOOOOOOOOOG UHUULL');
+
     return view('welcome');
 });
 

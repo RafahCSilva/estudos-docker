@@ -3,12 +3,14 @@ version: '3'
 services:
   web:
     container_name: l6fs_web
-    image: nginx:1.19-alpine
+    build:
+      context: ../
+      dockerfile: ./Docker/web.Dockerfile
+    image: rafahcsilva/k8s_laravel6fs-web:1.0.0
     depends_on:
       - app
     volumes:
       - ./default.nginx:/etc/nginx/conf.d/default.conf
-      - ../src/:/var/www/html:rw
     ports:
       - 80:80
     networks:
@@ -25,12 +27,12 @@ services:
     command: [ "php-fpm" ]
     networks:
       - backend
-    #    depends_on:
-    #      - redis
-    #      - mysql
-    #    links:
-    #      - mysql
-    #      - redis
+    depends_on:
+      - redis
+      - mysql
+    links:
+      - mysql
+      - redis
     # volumes:
     #   - ./src/:/app:rw
     environment:
