@@ -1,0 +1,38 @@
+# Cache Redis
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: laravel6fs
+  name: redis-service
+  labels:
+    app: redis-deployment
+spec:
+  ports:
+    - port: 6379
+      protocol: TCP
+  selector:
+    app: redis-deployment
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: laravel6fs
+  name: redis-deployment
+  labels:
+    app: redis-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-deployment
+  template:
+    metadata:
+      labels:
+        app: redis-deployment
+    spec:
+      containers:
+        - name: master
+          image: redis:alpine

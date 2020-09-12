@@ -1,0 +1,123 @@
+# App(PHP) and Nginx in same POD
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: laravel6fs
+  name: webapp-service
+  labels:
+    app: webapp-deployment
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: http
+  selector:
+    app: webapp-deployment
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: laravel6fs
+  name: webapp-deployment
+  labels:
+    app: webapp-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp-deployment
+  template:
+    metadata:
+      labels:
+        app: webapp-deployment
+    spec:
+      containers:
+        - name: webapp-php-container
+          image: rafahcsilva/k8s_laravel6fs-app:1.0.0
+          command: [ "php-fpm" ]
+          ports:
+            - containerPort: 9000
+          envFrom:
+            - configMapRef:
+                name: webapp-app-conf
+        - name: webapp-nginx-container
+          image: rafahcsilva/k8s_laravel6fs-web:1.0.0
+          command: ["nginx", "-g", "daemon off;"]
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /etc/nginx/conf.d
+              name: webapp-configmap-volume
+      volumes:
+        - name: webapp-configmap-volume
+          configMap:
+            name: webapp-nginxconf-map
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: laravel6fs
+  name: webapp-app-conf
+  labels:
+    name: webapp-app-conf
+data:
+  APP_NAME: "Laravel v6.x FullStack"
+  APP_ENV: "production"
+  APP_KEY: "base64:T6RjNP9tM3O12uuieaRZCQgWYRnLwqfv/RelaiT4r7k="
+  APP_DEBUG: "true"
+  APP_URL: "http://laravel6fsk8s.test"
+  LOG_CHANNEL: "stderr"
+  LOG_STDERR_FORMATTER: "Monolog\\Formatter\\JsonFormatter"
+  DB_CONNECTION: "mysql"
+  DB_HOST: "mysql-service"
+  DB_PORT: "3306"
+  DB_DATABASE: "l6fs"
+  DB_USERNAME: "teste"
+  DB_PASSWORD: "secret"
+  REDIS_HOST: "redis-service"
+  REDIS_PASSWORD: "null"
+  REDIS_PORT: "6379"
+  CACHE_DRIVER: "redis"
+  SESSION_DRIVER: "redis"
+  BROADCAST_DRIVER: "redis"
+  QUEUE_CONNECTION: "sync"
+  SESSION_LIFETIME: "120"
+
+---
+
+# kubectl create configmap nginxconfigmap --from-file=../library_api/docker/nginx/default
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: laravel6fs
+  name: webapp-nginxconf-map
+data:
+  nginx.conf: |-
+    server {
+        listen 80;
+        index index.php index.html;
+        root /var/www/html/public;
+        location ~ \.php$ {
+            try_files $uri =404;
+            fastcgi_split_path_info ^(.+\.php)(/.+)$;
+            fastcgi_pass localhost:9000;
+            fastcgi_index index.php;
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param PATH_INFO $fastcgi_path_info;
+        }
+        location / {
+            try_files $uri $uri/ /index.php?$query_string;
+            gzip_static on;
+        }
+    }

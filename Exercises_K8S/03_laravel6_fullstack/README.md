@@ -15,7 +15,12 @@ php artisan ui vue --auth
 ## Docker
 
 ````shell script
+cd Docker
+
+# Build
 docker-compose build 
+
+# Push
 docker-compose push app web
 #  Pushing app (rafahcsilva/k8s_laravel6fs-app:1.0.0)...
 #  The push refers to repository [docker.io/rafahcsilva/k8s_laravel6fs-app]
@@ -24,4 +29,18 @@ docker-compose push app web
 #  Pushing web (rafahcsilva/k8s_laravel6fs-web:1.0.0)...
 #  The push refers to repository [docker.io/rafahcsilva/k8s_laravel6fs-web]
 #  1.0.0: digest: sha256:21f32d9c3ec59dec595e798b7a2b46ed44c09a5fef1ac2c55e9e853e9c630724 size: 1777
+````
+
+## kubernetes
+
+````shell script
+cd Kubernetes
+
+# Applying configs
+kubectl apply -f .
+
+# CHeck Ingress
+kubectl get ingress -n=laravel6fs
+sudo nano /etc/hosts
+# 192.168.64.3 laravel6fsk8s.test
 ````
