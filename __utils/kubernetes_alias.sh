@@ -39,4 +39,13 @@ alias kd='kubectl describe'
 
 # minikube
 alias mk="minikube"
-alias mksd="minikube start --driver=hyperkit && minikube dashboard"
+alias mksd="minikube start && minikube dashboard"
+
+alias mk_reinstall_mac="minikube delete && minikube start --driver=hyperkit && minikube addons enable ingress"
+alias mk_reinstall_win="minikube delete && minikube start --driver=hyperv --hyperv-virtual-switch=minikube && minikube addons enable ingress"
+
+function update_kubeconfig() {
+  rm -rf ~/.kube && \
+  cp -a /mnt/c/Users/RafaelCardoso/.kube ~/.kube && \
+  sed -i -e "s|C:|/mnt/c|g" -e "s|[\]|\x2f|g" ~/.kube/config
+}

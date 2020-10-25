@@ -80,15 +80,16 @@ kubectl get services -n=library-api
 
 # Rodando o Migrate:
 # list all pods
-kgowide pods -n=library-ap
+kgowide pods -n=library-api
 # copia o nome completo do app-deployment-*, e execute o comando abaixo
 kubectl exec app-deployment-* -n=library-api -- php artisan migrate --seed
+kubectl exec app-deployment-* -n=library-api -- php artisan migrate:refresh --seed --force
 # ou Login no App-POD e execute
 php artisan migrate --seed
 
 
 # descubra o IP do service proxiado pelo minikube
-minikube service nginx-service --url
+minikube service nginx-service -n=library-api --url
 # http://192.168.64.2:31734
 
 # Acesse o app
@@ -105,7 +106,7 @@ kubectl apply -f 05_webapp.yml
 #  configmap/webapp-nginxconf-map created
 
 # Get URL
-minikube service webapp-service --url
+minikube service webapp-service -n=library-api --url
 ````
 
 ````shell script
@@ -137,6 +138,7 @@ kubectl get ingress -n=library-api
 
 # Ad domain in /etc/hosts
 sudo nano /etc/hosts
+gsudo notepad C:\Windows\System32\Drivers\etc\hosts
 #  192.168.64.2 libraryapi.test
 
 # acesse http://libraryapi.test/api/v1/books
