@@ -153,3 +153,15 @@ gsudo notepad C:\Windows\System32\Drivers\etc\hosts
 
 # acesse http://libraryapi.test/api/v1/books
 ````
+
+
+## Kubernetes Templatized
+
+````shell script
+cd Kubernetes-templatized
+
+# the kubetpl render template with variables in var and apply in kubectl
+kubetpl render <DEPLOYMENT.YAML> -i <.ENV_FILE> -x=$ | kubectl apply -f -
+
+# tests in Kubernetes-templatized/gen.sh
+````

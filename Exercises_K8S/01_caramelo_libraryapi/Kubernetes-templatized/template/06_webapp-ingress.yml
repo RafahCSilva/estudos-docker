@@ -1,0 +1,19 @@
+# Ingress for webapp-service in URL http://libraryapi.test
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: ${namespace}
+  name: webapp-ingress
+spec:
+  rules:
+    - host: ${url}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: webapp-service
+                port:
+                  number: 80

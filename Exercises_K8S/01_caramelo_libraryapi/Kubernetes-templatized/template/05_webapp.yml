@@ -1,0 +1,171 @@
+# App(PHP) and Nginx in same POD
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: ${namespace}
+  name: webapp-service
+  labels:
+    app: webapp-deployment
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: http
+  selector:
+    app: webapp-deployment
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: ${namespace}
+  name: webapp-deployment
+  labels:
+    app: webapp-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp-deployment
+  template:
+    metadata:
+      labels:
+        app: webapp-deployment
+    spec:
+      containers:
+        - name: webapp-php-container
+          image: ${project.imageRepository}:${project.imageVersion}
+          ports:
+            - containerPort: 9000
+          envFrom:
+            - configMapRef:
+                name: webapp-app-conf
+          resources:
+            requests:
+              memory: 200Mi
+              cpu: 0.1
+            limits:
+              memory: 256Mi
+              cpu: 0.2
+        - name: webapp-nginx-container
+          image: nginx:1.14.2
+          command: [ "nginx", "-g", "daemon off;" ]
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /etc/nginx/conf.d
+              name: webapp-configmap-volume
+            - mountPath: /var/www/html/public
+              name: webapp-indexmap-volume
+          resources:
+            requests:
+              memory: 100Mi
+              cpu: 0.05
+            limits:
+              memory: 128Mi
+              cpu: 0.1
+      volumes:
+        - name: webapp-configmap-volume
+          configMap:
+            name: webapp-nginxconf-map
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+        - name: webapp-indexmap-volume
+          configMap:
+            name: webapp-nginxindex-map
+            items:
+              - key: index.php
+                path: index.php
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: ${namespace}
+  name: webapp-app-conf
+  labels:
+    name: webapp-app-conf
+data:
+  APP_NAME: appLibrary
+  APP_ENV: ${project.env.app_env}
+  APP_KEY: "base64:vw6G2uP8LV22haEERtzr5yDCBraLrMwbxlbSJDA97uk="
+  APP_DEBUG: "true"
+  APP_URL: ${url}
+  LOG_CHANNEL: stderr
+  LOG_STDERR_FORMATTER: Monolog\Formatter\JsonFormatter
+  DB_CONNECTION: mysql
+  DB_HOST: mysql-service
+  DB_PORT: "3306"
+  DB_DATABASE: library_admin
+  DB_USERNAME: root
+  DB_PASSWORD: testes
+  BROADCAST_DRIVER: log
+  CACHE_DRIVER: file
+  QUEUE_CONNECTION: database
+  SESSION_DRIVER: redis
+  SESSION_LIFETIME: "120"
+  REDIS_HOST: redis-service
+  REDIS_PASSWORD: "null"
+  REDIS_PORT: "6379"
+  MAIL_DRIVER: smtp
+  MAIL_HOST: smtp.mailtrap.io
+  MAIL_PORT: "2525"
+  MAIL_USERNAME: "null"
+  MAIL_PASSWORD: "null"
+  MAIL_ENCRYPTION: "null"
+  AWS_ACCESS_KEY_ID: ""
+  AWS_SECRET_ACCESS_KEY: ""
+  AWS_DEFAULT_REGION: us-east-1
+  AWS_BUCKET: ""
+  PUSHER_APP_ID: ""
+  PUSHER_APP_KEY: ""
+  PUSHER_APP_SECRET: ""
+  PUSHER_APP_CLUSTER: mt1
+
+
+---
+
+# @ref https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: ${namespace}
+  name: webapp-nginxindex-map
+data:
+  index.php: |-
+    <?php echo "sou fake";
+
+---
+
+# kubectl create configmap nginxconfigmap --from-file=../library_api/docker/nginx/default
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: ${namespace}
+  name: webapp-nginxconf-map
+data:
+  nginx.conf: |-
+    server {
+        listen 80;
+        index index.php index.html;
+        root /var/www/html/public;
+        location ~ \.php$ {
+            try_files $$uri =404;
+            fastcgi_split_path_info ^(.+\.php)(/.+)$;
+            fastcgi_pass localhost:9000;
+            fastcgi_index index.php;
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $$document_root$$fastcgi_script_name;
+            fastcgi_param PATH_INFO $$fastcgi_path_info;
+        }
+        location / {
+            try_files $$uri $$uri/ /index.php?$$query_string;
+            gzip_static on;
+        }
+    }

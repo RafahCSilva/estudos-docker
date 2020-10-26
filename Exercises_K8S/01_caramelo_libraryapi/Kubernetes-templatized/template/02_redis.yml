@@ -1,0 +1,68 @@
+# Cache Redis
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: ${namespace}
+  name: redis-service
+  labels:
+    app: redis-deployment
+spec:
+  ports:
+    - port: 6379
+      targetPort: 6379
+      protocol: TCP
+  selector:
+    app: redis-deployment
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: ${namespace}
+  name: redis-deployment
+  labels:
+    app: redis-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-deployment
+  template:
+    metadata:
+      labels:
+        app: redis-deployment
+    spec:
+      containers:
+        - name: master
+          image: redis:alpine
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          volumeMounts:
+            - name: redis-persistent-storage
+              mountPath: /data/redis
+          ports:
+            - containerPort: 6379
+      volumes:
+        - name: redis-persistent-storage
+          persistentVolumeClaim:
+            claimName: redis-pvclaim
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: ${namespace}
+  name: redis-pvclaim
+  annotations:
+    volume.beta.kubernetes.io/storage-class: standard
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1G

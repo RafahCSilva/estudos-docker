@@ -1,0 +1,83 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  namespace: library-api
+spec:
+  clusterIP: None
+  ports:
+  - port: 3306
+  selector:
+    app: mysql-deployment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mysql-deployment
+  name: mysql-deployment
+  namespace: library-api
+spec:
+  selector:
+    matchLabels:
+      app: mysql-deployment
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql-deployment
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: testes
+        - name: MYSQL_DATABASE
+          value: library_admin
+        - name: MYSQL_USER
+          value: sandbox
+        - name: MYSQL_PASSWORD
+          value: sandbox
+        image: mariadb:latest
+        name: mysql-deployment
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: mysql-persistent-storage
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pvclaim
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  labels:
+    type: local
+  name: mysql-pv-volume
+  namespace: library-api
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 2Gi
+  hostPath:
+    path: /mnt/data
+  storageClassName: manual
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvclaim
+  namespace: library-api
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: manual
+
