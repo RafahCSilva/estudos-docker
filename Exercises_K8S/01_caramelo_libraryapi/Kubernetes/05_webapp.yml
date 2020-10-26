@@ -38,15 +38,22 @@ spec:
     spec:
       containers:
         - name: webapp-php-container
-          image: rafahcsilva/k8s_libraryapi-app:1.3.0
+          image: rafahcsilva/k8s_libraryapi-app:1.4.2
           ports:
-            - containerPort: 80
+            - containerPort: 9000
           envFrom:
             - configMapRef:
                 name: webapp-app-conf
+          resources:
+            requests:
+              memory: 200Mi
+              cpu: 0.1
+            limits:
+              memory: 256Mi
+              cpu: 0.2
         - name: webapp-nginx-container
           image: nginx:1.14.2
-          command: ["nginx", "-g", "daemon off;"]
+          command: [ "nginx", "-g", "daemon off;" ]
           ports:
             - containerPort: 80
           volumeMounts:
@@ -54,6 +61,13 @@ spec:
               name: webapp-configmap-volume
             - mountPath: /var/www/html/public
               name: webapp-indexmap-volume
+          resources:
+            requests:
+              memory: 100Mi
+              cpu: 0.05
+            limits:
+              memory: 128Mi
+              cpu: 0.1
       volumes:
         - name: webapp-configmap-volume
           configMap:
@@ -93,7 +107,7 @@ data:
   DB_PASSWORD: testes
   BROADCAST_DRIVER: log
   CACHE_DRIVER: file
-  QUEUE_CONNECTION: sync
+  QUEUE_CONNECTION: database
   SESSION_DRIVER: redis
   SESSION_LIFETIME: "120"
   REDIS_HOST: redis-service

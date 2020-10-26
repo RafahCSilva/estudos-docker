@@ -38,7 +38,7 @@ docker-compose push app
 ````
 
 
-## KUBENETES 
+## KUBERNETES 
 
 ````shell script
 # Crie os YMLs
@@ -48,8 +48,8 @@ cd ../Kubernetes
 kubectl apply -f 00_namespace.yml
 kubectl apply -f 01_mysql.yml
 kubectl apply -f 02_redis.yml
-kubectl apply -f 03_app.yml
-kubectl apply -f 04_nginx.yml
+#kubectl apply -f 03_app.yml
+#kubectl apply -f 04_nginx.yml
 #  service/mysql-service created
 #  deployment.apps/mysql-deployment created
 #  persistentvolume/mysql-pv-volume created
@@ -82,10 +82,10 @@ kubectl get services -n=library-api
 # list all pods
 kgowide pods -n=library-api
 # copia o nome completo do app-deployment-*, e execute o comando abaixo
-kubectl exec app-deployment-* -n=library-api -- php artisan migrate --seed
-kubectl exec app-deployment-* -n=library-api -- php artisan migrate:refresh --seed --force
+#   kubectl exec app-deployment-* -n=library-api -- php artisan migrate --seed
+#   kubectl exec app-deployment-* -n=library-api -- php artisan migrate:refresh --seed --force
 # ou Login no App-POD e execute
-php artisan migrate --seed
+#   php artisan migrate --seed
 
 
 # descubra o IP do service proxiado pelo minikube
@@ -94,9 +94,9 @@ minikube service nginx-service -n=library-api --url
 
 # Acesse o app
 # http://192.168.64.2:31734/api/v1/authors
-````
 
-````shell script
+
+
 # App e Nginx no mesmo POD
 kubectl apply -f 05_webapp.yml
 #  service/webapp-service created
@@ -105,11 +105,21 @@ kubectl apply -f 05_webapp.yml
 #  configmap/webapp-nginxindex-map created
 #  configmap/webapp-nginxconf-map created
 
+# HPA
+kubectl apply -f 05_webapp-hpa.yml
+
+# Laravel Queue
+kubectl apply -f 05_webapp-queue.yml
+# Login in pod terminal:
+#   php artisan queue:table
+#   php artisan migrate
+# curl http://libraryapi.test/api/v1/author/process/message?message=RAFAAAO
+
+
 # Get URL
 minikube service webapp-service -n=library-api --url
-````
 
-````shell script
+
 # Cron Jobs
 kubectl apply -f 07_cronjobs.yaml
 ````
@@ -136,7 +146,7 @@ kubectl get ingress -n=library-api
 #  NAME             CLASS    HOSTS             ADDRESS        PORTS   AGE
 #  webapp-ingress   <none>   libraryapi.test   192.168.64.2   80      47s
 
-# Ad domain in /etc/hosts
+# Add domain in /etc/hosts
 sudo nano /etc/hosts
 gsudo notepad C:\Windows\System32\Drivers\etc\hosts
 #  192.168.64.2 libraryapi.test

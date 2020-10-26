@@ -53,7 +53,7 @@ spec:
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
-            claimName: mysql-pv-claim
+            claimName: mysql-pvclaim
 
 ---
 
@@ -79,7 +79,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   namespace: library-api
-  name: mysql-pv-claim
+  name: mysql-pvclaim
 spec:
   storageClassName: manual
   accessModes:

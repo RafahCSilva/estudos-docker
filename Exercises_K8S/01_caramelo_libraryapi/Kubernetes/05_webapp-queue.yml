@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: library-api
+  name: webapp-queue
+  labels:
+    app: webapp-queue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp-queue
+  template:
+    metadata:
+      labels:
+        app: webapp-queue
+    spec:
+      containers:
+        - name: webapp-queue-container
+          image: rafahcsilva/k8s_libraryapi-app:1.4.2
+          imagePullPolicy: Always
+          command: [ "php", "/var/www/html/artisan", "queue:work", "--verbose", "--tries=7", "--timeout=90" ]
+          envFrom:
+            - configMapRef:
+                name: webapp-app-conf

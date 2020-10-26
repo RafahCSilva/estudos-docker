@@ -11,7 +11,7 @@ alias ka='kubectl apply --recursive -f'
 alias kc='kubectl create --recursive -f'
 
 # delete
-alias krm='kubectl delete'
+alias krm='kubectl delete -f'
 alias krmf='kubectl delete --recursive -f'
 
 # exec
@@ -36,6 +36,7 @@ alias kgsvc='kubectl get service'
 
 # describe
 alias kd='kubectl describe'
+alias kdn='kubectl describe node'
 
 # minikube
 alias mk="minikube"
