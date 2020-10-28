@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  registry:
+    restart: always
+    image: registry:2
+    ports:
+      - 5000:5000
+    environment:
+      REGISTRY_HTTP_TLS_CERTIFICATE: /certs/ssl_bundle_star_ftd_com_br.crt
+      REGISTRY_HTTP_TLS_KEY: /certs/star_ftd_com_br.key
+      # REGISTRY_AUTH: htpasswd
+      # REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+      # REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+    volumes:
+      - ./data/registry:/var/lib/registry
+      - ./data/certs:/certs
+      - ./data/auth:/auth

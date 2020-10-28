@@ -23,8 +23,9 @@ for FILE in $FILES; do
   echo " - $FILE"
   kubetpl \
     render "./template/$FILE" \
-    -i ./local.env \
+    -i ./dev-DockerHubRegistry.env \
     -x=$ \
     >"./generated/$FILE"
+    #| kubectl apply -f -
 done
 echo "Generated!"

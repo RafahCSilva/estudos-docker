@@ -1,7 +1,7 @@
 # Exercício 01 - Provisionar Caramelo/library_api em Kubernetes
 
 
-## APPLICATION
+## 1. APPLICATION
 
 - Aplicação desenvolvida por [brunocaramelo/library_api](https://github.com/brunocaramelo/library_api)
 
@@ -11,7 +11,7 @@ git clone  --branch features/kubernets-integration https://github.com/brunocaram
 ````
 
 
-## DOCKER
+## 2. DOCKER
 
 ````shell script
 cd Docker
@@ -38,7 +38,7 @@ docker-compose push app
 ````
 
 
-## KUBERNETES 
+## 3. KUBERNETES 
 
 ````shell script
 # Crie os YMLs
@@ -125,7 +125,7 @@ kubectl apply -f 07_cronjobs.yaml
 ````
 
 
-### INGRESS ON MINIKUBE
+### 3.1. INGRESS ON MINIKUBE
 
 ````shell script
 # Set up Ingress on Minikube with the NGINX Ingress Controller
@@ -155,13 +155,61 @@ gsudo notepad C:\Windows\System32\Drivers\etc\hosts
 ````
 
 
-## Kubernetes Templatized
+## 4. Kubernetes Templatized
 
 ````shell script
 cd Kubernetes-templatized
 
-# the kubetpl render template with variables in var and apply in kubectl
-kubetpl render <DEPLOYMENT.YAML> -i <.ENV_FILE> -x=$ | kubectl apply -f -
+# the kubetpl render template with variables in your evn and apply in kubectl
+kubetpl render DEPLOYMENT_YAML -i ENV_FILE -x=$ | kubectl apply -f -
 
 # tests in Kubernetes-templatized/gen.sh
+````
+
+
+## 5. Using a Local Docker Registry
+
+- Configuring a Local Docker Registry
+````shell script
+cd local-registy
+# config your certificates for SSL (required for kubernetes usage)
+#   put files in ./data/certs
+#   indicate files in `environment`:
+#     `REGISTRY_HTTP_TLS_CERTIFICATE: /certs/SSL.crt`
+#     `REGISTRY_HTTP_TLS_KEY: /certs/SSL.key`
+
+# up the container
+docker-compose up
+
+# point the custom domain to your machine /etc/hosts
+127.0.0.1 repo-registry-local.ftd.com.br
+````
+
+- Push Images to Local Registry
+    - Add a tag in your Docker image in format `local-url:5000/project:version` to your last local image build
+        - Run `docker tag IMAGE_HASH LOCAL_REGISTRY_URL:5000/IMAGE:VERSION`
+            - for example `docker tag rafahcsilva/k8s_libraryapi-app:1.2.3 repo-registry-local.ftd.com.br:5000/k8s_libraryapi-app:1.2.3`
+        - Or simply in `docker-compose.yaml` change `image: rafahcsilva/k8s_libraryapi-app:1.2.3` to `image: repo-registry-local.ftd.com.br:5000/k8s_libraryapi-app:1.2.3` and run `docker-compose build` 
+    - Push the new tagged image `docker push repo-registry-local.ftd.com.br:5000/k8s_libraryapi-app:1.2.3`
+    - Confirm receipt in registry `curl https://repo-registry-local.ftd.com.br:5000/v2/k8s_libraryapi-app/tags/list` for getting `{"name":"k8s_libraryapi-app","tags":["1.2.3"]}`
+
+- Configuring Minikube to see your Local Registry
+````shell script
+# Inside the MinikuBe VM
+# find the local IP used for `host.minikube.internal`
+minikube ssh "cat /etc/hosts"
+# > 192.168.0.179   host.minikube.internal
+
+# point your Local URL to this IP 
+minikube ssh "echo \"192.168.0.179   repo-registry-local.ftd.com.br\" | sudo tee -a /etc/hosts"
+````
+
+- Render Kubernetes templates with env to Local Registry and Apply
+````shell script
+cd Kubernetes-templatized
+kubetpl \
+  render ./template/05_webapp.yml \
+  -i ./dev-localRegistry.env \
+  -x=$ \
+  | kubectl apply -f -
 ````

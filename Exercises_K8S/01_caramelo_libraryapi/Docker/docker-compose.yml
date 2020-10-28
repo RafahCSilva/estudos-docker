@@ -5,7 +5,8 @@ services:
     build:
       context: ../
       dockerfile: ./Docker/app.Dockerfile
-    image: rafahcsilva/k8s_libraryapi-app:1.4.2
+    image: rafahcsilva/k8s_libraryapi-app:1.4.3
+    #image: repo-registry-local.ftd.com.br:5000/k8s_libraryapi-app:1.4.3
     # commands testes
     #command: [ "php", "artisan", "schedulerInutil:run" ]
     #command: [ "php", "artisan", "cuspirlog:run", "--parametrozao=valorAqui" ]

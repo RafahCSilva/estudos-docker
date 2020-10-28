@@ -5,7 +5,7 @@
 ````shell script
 # install gsudo - a sudo for Windows
 choco install gsudo -y
-:: update Path environment variable
+# update Path environment variable
 refreshenv
 
 # install docker + kubernetes + minikube
