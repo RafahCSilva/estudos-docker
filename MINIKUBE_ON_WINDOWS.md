@@ -24,6 +24,7 @@ minikube delete
 minikube start --driver=hyperv --hyperv-virtual-switch=minikube
 minikube dashboard
 minikube addons enable ingress --alsologtostderr
+minikube addons enable metrics-server
 ````
 
 ### Se tiver problema ao fazer pull da image
